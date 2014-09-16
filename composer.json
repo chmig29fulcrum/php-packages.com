@@ -5,11 +5,15 @@
     "framework",
     "laravel"
   ],
+  "type":              "project",
   "license":           "MIT",
   "require":           {
-    "laravel/framework":             "4.2.*",
-    "jleagle/packagist-api-wrapper": "dev-master",
-    "barryvdh/laravel-ide-helper":   "1.*"
+    "laravel/framework":            "4.2.*",
+    "barryvdh/laravel-ide-helper":  "1.*",
+    "forxer/Gravatar":              "*",
+    "jleagle/packagist-api-client": "dev-master",
+    "jleagle/word-cloud":           "dev-master",
+    "jleagle/php-bootstrap":        "dev-master"
   },
   "autoload":          {
     "classmap": [

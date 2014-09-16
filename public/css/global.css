@@ -1,0 +1,6 @@
+.thumbnail .caption *
+{
+  height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+}
