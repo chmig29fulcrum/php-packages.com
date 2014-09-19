@@ -6,10 +6,12 @@
     <h1>{{ $tag->name }}</h1>
   </div>
 
-  @foreach($tag->packages as $package)
-
-    @include('packages.include', ['author' => $package])
-
-  @endforeach
+  <div class="row">
+    @foreach($tag->packages as $package)
+      <div class="col-xs-6">
+        @include('packages.include', ['author' => $package])
+      </div>
+    @endforeach
+  </div>
 
 @stop

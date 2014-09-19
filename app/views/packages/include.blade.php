@@ -1,6 +1,6 @@
 <?php if ($package->name){ ?>
 
-  <a href="{{ route('package', [$package->author, $package->name]) }}" class="panel panel-info" style="display: block;">
+  <a href="{{ route('package', [$package->author, $package->name]) }}" class="panel panel-info package-include">
 
     <div class="panel-heading">
       <span class="badge pull-right">{{ number_format($package->downloads_m) }}</span>

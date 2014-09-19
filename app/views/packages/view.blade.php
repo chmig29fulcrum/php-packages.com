@@ -2,8 +2,16 @@
 
 @section('content')
 
+  <?php
+  $message = Session::get('message');
+  if ($message)
+  {
+    echo '<div class="alert alert-'.$message['class'].'" role="alert">'.$message['message'].'</div>';
+  }
+  ?>
+
   <div class="page-header">
-    {{ link_to_route('update-package', 'Update Package', $package->id, ['class' => 'btn btn-default pull-right']) }}
+    {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default pull-right']) }}
     <h1>{{ $package->name }} <small>{{ $package->author }}</small></h1>
   </div>
 
@@ -16,7 +24,9 @@
 
       @foreach($package->authors as $author)
         <h2>
-          <a href="{{ route('author', [$author->id, Str::slug($author->name)]) }}"><img src="{{ \forxer\Gravatar\Gravatar::image($author->email, 256, 'mm', null, 'png', false) }}" alt="" style="height: 64px;" /></a>
+          <a href="{{ route('author', [$author->id, Str::slug($author->name)]) }}">
+          <img src="{{ \forxer\Gravatar\Gravatar::image($author->email, 256, 'mm', null, 'png', false) }}" alt="" style="height: 64px;" />
+          </a>
           {{ $author->name }}
           <small>{{ $author->role }}</small>
         </h2>

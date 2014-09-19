@@ -45,6 +45,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
           <ul class="nav navbar-nav">
+            <li {{ (Request::is('*home*') ? 'class="active"' : '') }}>{{ link_to_route('home', 'Home') }}</li>
             <li {{ (Request::is('*package*') ? 'class="active"' : '') }}>{{ link_to_route('packages', 'Packages') }}</li>
             <li {{ (Request::is('*author*') ? 'class="active"' : '') }}>{{ link_to_route('authors', 'Authors') }}</li>
             <li {{ (Request::is('*tag*') ? 'class="active"' : '') }}>{{ link_to_route('tags', 'Tags') }}</li>

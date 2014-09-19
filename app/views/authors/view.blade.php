@@ -12,10 +12,12 @@
     <h1>{{ $author->name }}</h1>
   </div>
 
-  @foreach($author->packages as $package)
-
-    @include('packages.include', ['package' => $package])
-
-  @endforeach
+  <div class="row">
+    @foreach($author->packages as $package)
+      <div class="col-xs-6">
+        @include('packages.include', ['package' => $package])
+      </div>
+    @endforeach
+  </div>
 
 @stop

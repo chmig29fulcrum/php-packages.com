@@ -2,26 +2,33 @@
 
 @section('content')
 
+  <?php
+  $message = Session::get('message');
+  if ($message)
+  {
+    echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
+  }
+  ?>
 
-<div class="jumbotron">
-  <div class="container">
-      <h1>Hello, world!</h1>
-      <p>...</p>
-      <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+  <div class="jumbotron">
+    <div class="container">
+        <h1>Reverse Packagist</h1>
+        <p>{{ $count }} repos total</p>
+    </div>
   </div>
-</div>
 
+  <div class="page-header">
+    <h1>Newest</h1>
+  </div>
 
-  <h1>Tags</h1>
-
-  <?php echo $tags->links(); ?>
-
-    @foreach($tags as $tag)
-
-      <h3 style="display: inline;">{{ link_to_route('tag', $tag->name, [$tag->id, $tag->name], ['class' => 'label label-primary']) }}</h3>
-
-    @endforeach
-
+  <div>
+    <div class="row">
+      @foreach($packages as $package)
+        <div class="col-xs-6">
+          @include('packages.include', ['package' => $package])
+        </div>
+      @endforeach
+    </div>
   </div>
 
 @stop

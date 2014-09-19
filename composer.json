@@ -13,7 +13,12 @@
     "forxer/Gravatar":              "*",
     "jleagle/packagist-api-client": "dev-master",
     "jleagle/word-cloud":           "dev-master",
-    "jleagle/php-bootstrap":        "dev-master"
+    "jleagle/php-bootstrap":        "dev-master",
+    "anahkiasen/flatten":           "dev-master",
+    "packaged/helpers":             "dev-master"
+  },
+  "require-dev":           {
+    "barryvdh/laravel-debugbar":    "1.*"
   },
   "autoload":          {
     "classmap": [
@@ -42,5 +47,5 @@
   "config":            {
     "preferred-install": "dist"
   },
-  "minimum-stability": "stable"
+  "minimum-stability": "dev"
 }
