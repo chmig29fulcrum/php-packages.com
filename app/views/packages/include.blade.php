@@ -8,9 +8,7 @@
     </div>
 
     <div class="panel-body">
-      {{ $package->description }}
-      {{ $package->downloads }}
-      {{ $package->stars }}
+      {{ $package->description or '&nbsp;' }}
     </div>
 
   </a>

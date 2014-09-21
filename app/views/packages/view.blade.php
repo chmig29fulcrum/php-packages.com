@@ -11,13 +11,21 @@
   ?>
 
   <div class="page-header">
-    <div class="btn-group pull-right">
-      <a class="btn btn-default" href="https://packagist.org/packages/{{ $package->full_name }}">Packagist</a>
-      <a class="btn btn-default" href="{{ $package->repo }}">Repo</a>
-      {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default']) }}
+    <div class="btn-toolbar  pull-right" role="toolbar">
+      <div class="btn-group">
+        <a class="btn btn-default" href="https://packagist.org/packages/{{ $package->full_name }}">Packagist</a>
+        <a class="btn btn-default" href="{{ $package->repo }}">Repo</a>
+      </div>
+      <div class="btn-group">
+        {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default']) }}
+      </div>
     </div>
-    <h1>Package: {{ $package->name }} <small>{{ $package->author }}</small></h1>
+    <h1>Package: {{ $package->name }} <small>{{ $package->author }} ({{ $package->type }})</small></h1>
   </div>
+
+  <?php if ($package->description){ ?>
+  <div class="well well-sm">{{ $package->description }}</div>
+  <?php } ?>
 
   <div id="tags">
     @foreach($package->tags as $tag)

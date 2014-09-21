@@ -10,8 +10,8 @@ class HomeController extends BaseController
     $packages = Package
       ::orderBy('created_at', 'desc')
       ->where('name', '!=', '')
-      ->where('created_at', '>', strtotime('-7 days'))
-      ->limit(100)
+      ->where('created_at', '>', date("Y-m-d H:i:s", strtotime('-7 days')))
+      ->limit(50)
       ->get();
 
 		return View::make('index', [

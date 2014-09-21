@@ -131,7 +131,7 @@
   });
 
   $("#results").highlight('{{ $data['search'] or '' }}', {
-    caseSensitive: true,
+    caseSensitive: false,
     wordsOnly: false
   });
 
@@ -144,11 +144,5 @@
 
   {{ HTML::style('css/vendor/select2.css') }}
   {{ HTML::style('css/vendor/select2-bootstrap.css') }}
-
-  <style>
-  .highlight {
-      background-color: #FFFF88;
-  }
-  </style>
 
 @stop
