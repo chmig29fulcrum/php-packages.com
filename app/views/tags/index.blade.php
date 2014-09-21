@@ -8,7 +8,9 @@
 
   @foreach($tags as $tag)
 
-    <h3 style="display: inline;">{{ link_to_route('tag', $tag->name, [$tag->id, $tag->name], ['class' => 'label label-primary']) }}</h3>
+    <h3 style="display: inline;">
+      {{ link_to_route('packages', $tag->name, ['tags' => $tag->id], ['class' => 'label label-primary']) }}
+    </h3>
 
   @endforeach
 

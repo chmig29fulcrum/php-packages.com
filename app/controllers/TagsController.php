@@ -11,16 +11,6 @@ class TagsController extends BaseController
     ]);
 	}
 
-  public function view($id, $slug = null)
-  {
-    $tag = Tag::where('id', '=', $id)->firstOrFail();
-    $tag->packages->sortByDesc('downloads_m');
-
-    return View::make('tags.view', [
-      'tag' => $tag
-    ]);
-  }
-
   public function ajaxSearchTags()
   {
     $data = Input::all();
