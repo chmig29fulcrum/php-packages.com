@@ -3,31 +3,37 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Jleagle\Packagist;
 
+//SK4-5E17-988F-0F53-A238-0889
+
 class PackagesController extends BaseController
 {
 
   public function index()
   {
 
-    $data = Input::all();
+    $data           = Input::all();
+    $data['types']  = idx($data, 'types', '');
+    $data['tags']   = idx($data, 'tags', '');
+    $data['search'] = idx($data, 'search', '');
+    $data['order']  = idx($data, 'order', 'downloads');
+
 
     $packages = Package
       ::where('name', '!=', '')
       ->where('author', '!=', '');
 
     // Types
-    $types = idx($data, 'types', '');
-    if ($types)
+    if ($data['types'])
     {
-      $types = explode(',', $types);
+      $types = explode(',', $data['types']);
       $packages = $packages->whereIn('type', $types);
     }
 
     // Tags
-    $tags = idx($data, 'tags', '');
-    if ($tags)
+    if ($data['tags'])
     {
-      $tags = explode(',', $tags);
+      // todo - fix - not working for 'ajax'
+      $tags = explode(',', $data['tags']);
       $tags = Tag::whereIn('id', $tags)->with('packages')->get();
       $packageIds = [];
       foreach($tags as $v)
@@ -41,8 +47,7 @@ class PackagesController extends BaseController
     }
 
     // Search
-    $search = idx($data, 'search', '');
-    if ($search)
+    if ($data['search'])
     {
       $packages = $packages->where(function ($query) use ($data) {
           $query
@@ -54,10 +59,9 @@ class PackagesController extends BaseController
     }
 
     // Order
-    $order = (idx($data, 'order', 'downloads'));
-    if (in_array($order, ['name', 'author']))
+    if (in_array($data['order'], ['name', 'author']))
     {
-      $packages = $packages->orderBy($order, 'asc')->orderBy('downloads_m', 'desc');
+      $packages = $packages->orderBy($data['order'], 'asc')->orderBy('downloads_m', 'desc');
     }
     else
     {
@@ -65,7 +69,12 @@ class PackagesController extends BaseController
     }
 
     // Get packages
-    $packages = $packages->paginate(50);
+    $packages = $packages->paginate(50)->appends([
+        'types'   => $data['types'],
+        'tags'   => $data['tags'],
+        'search' => $data['search'],
+        'order'  => $data['order'],
+    ]);
 
     // Get types for select
     $types = DB::table('packages')

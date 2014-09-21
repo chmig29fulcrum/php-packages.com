@@ -4,34 +4,34 @@
 
   <h1>Search Packages</h1>
 
-  {{ Form::model($data, ['role' => 'form', 'class' => '']) }}
+  {{ Form::model($data, ['role' => 'form', 'class' => '', 'method'=> 'GET', 'style' => 'margin-bottom: 20px;']) }}
 
-  <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <div class="form-group">
-        {{ Form::label('types', 'Type') }}
-        {{ Form::hidden('types', null, ['class' => 'form-control', 'id' => 'types']) }}
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          {{ Form::label('types', 'Type') }}
+          {{ Form::hidden('types', null, ['class' => 'form-control', 'id' => 'types']) }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          {{ Form::label('tags', 'Tags') }}
+          {{ Form::hidden('tags', null, ['class' => 'form-control', 'id' => 'tags']) }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          {{ Form::label('search', 'Search') }}
+          {{ Form::text('search', null, ['class' => 'form-control']) }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
+          {{ Form::label('order', 'Order By') }}
+          {{ Form::select('order', $orders, null, ['class' => 'form-control']) }}
+        </div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <div class="form-group">
-        {{ Form::label('tags', 'Tags') }}
-        {{ Form::hidden('tags', null, ['class' => 'form-control', 'id' => 'tags']) }}
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <div class="form-group">
-        {{ Form::label('search', 'Search') }}
-        {{ Form::text('search', null, ['class' => 'form-control']) }}
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <div class="form-group">
-        {{ Form::label('order', 'Order By') }}
-        {{ Form::select('order', $orders, null, ['class' => 'form-control']) }}
-      </div>
-    </div>
-  </div>
 
   {{ Form::submit('Search', ['class' => 'btn btn-primary']) }}
 
@@ -134,6 +134,8 @@
     caseSensitive: true,
     wordsOnly: false
   });
+
+  $("ul.pagination").addClass('clearfix').css({display:'block'});
   </script>
 
 @stop
