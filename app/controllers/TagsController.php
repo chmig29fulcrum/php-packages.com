@@ -30,7 +30,7 @@ class TagsController extends BaseController
       ::select('id', 'name')
       ->where('name', 'like', '%' . $search . '%')
       ->orderBy('name', 'asc')
-      ->paginate(10);
+      ->paginate(20);
 
     $items = [];
     foreach($paginate->getItems() as $item)
@@ -50,8 +50,14 @@ class TagsController extends BaseController
   public function ajaxSearchTagsInit()
   {
     $data = Input::all();
-    $ids = explode(',', $data['ids']);
+    $ids = idx($data, 'ids', '');
+    $ids = explode(',', $ids);
     $ids = array_filter($ids);
+
+    if (!$ids)
+    {
+      return [];
+    }
 
     $packages = Tag
       ::select('id', 'name')

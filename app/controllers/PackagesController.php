@@ -11,21 +11,34 @@ class PackagesController extends BaseController
 
     $data = Input::all();
 
-    print_r($data);
-
     $packages = Package
       ::where('name', '!=', '')
       ->where('author', '!=', '');
 
     // Types
-    $types = idx($data, 'type', []);
+    $types = idx($data, 'types', '');
     if ($types)
     {
+      $types = explode(',', $types);
       $packages = $packages->whereIn('type', $types);
     }
 
     // Tags
-    //
+    $tags = idx($data, 'tags', '');
+    if ($tags)
+    {
+      $tags = explode(',', $tags);
+      $tags = Tag::whereIn('id', $tags)->with('packages')->get();
+      $packageIds = [];
+      foreach($tags as $v)
+      {
+        foreach($v->packages as $vv)
+        {
+          $packageIds[] = $vv->id;
+        }
+      }
+      $packages = $packages->whereIn('id', $packageIds);
+    }
 
     // Search
     $search = idx($data, 'search', '');
@@ -62,14 +75,11 @@ class PackagesController extends BaseController
       ->orderBy('count', 'desc')
       ->lists('type', 'type');
 
-    // Get orders for select
-    $orders = ['downloads', 'name', 'author'];
-
     return View::make('packages.index', [
         'packages' => $packages,
         'types' => $types,
         'data' => $data,
-        'orders' => array_combine($orders, $orders),
+        'orders' => array_combine(['downloads', 'name', 'author'], ['Downloads', 'Name', 'Author']),
       ]);
   }
 
@@ -302,6 +312,34 @@ class PackagesController extends BaseController
     $package->touch();
 
     return $data;
+  }
+
+  public function ajaxSearchPackages()
+  {
+    $data = Input::all();
+
+    $search = idx($data, 'search', '');
+    $paginate = Package
+      ::select('type')
+      ->where('type', '<>', '')
+      ->where('type', 'like', '%'.$search.'%')
+      ->groupBy('type')
+      ->orderBy('type', 'asc')
+      ->paginate(20);
+
+    $items = [];
+    foreach($paginate->getItems() as $item)
+    {
+      $items[] = [
+        'id' => $item->type,
+        'text' => $item->type,
+      ];
+    }
+
+    return [
+      'results' => $items,
+      'lastPage' => $paginate->getLastPage(),
+    ];
   }
 
 }

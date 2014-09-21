@@ -7,25 +7,25 @@
   {{ Form::model($data, ['role' => 'form', 'class' => '']) }}
 
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="form-group">
-        {{ Form::label('type[]', 'Package Type') }}
-        {{ Form::select('type[]', $types, null, ['class' => 'form-control', 'multiple', 'id' => 'type']) }}
+        {{ Form::label('types', 'Type') }}
+        {{ Form::hidden('types', null, ['class' => 'form-control', 'id' => 'types']) }}
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="form-group">
         {{ Form::label('tags', 'Tags') }}
-        {{ Form::text('tags', null, ['class' => 'form-control', 'id' => 'tags']) }}
+        {{ Form::hidden('tags', null, ['class' => 'form-control', 'id' => 'tags']) }}
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="form-group">
         {{ Form::label('search', 'Search') }}
         {{ Form::text('search', null, ['class' => 'form-control']) }}
       </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
       <div class="form-group">
         {{ Form::label('order', 'Order By') }}
         {{ Form::select('order', $orders, null, ['class' => 'form-control']) }}
@@ -41,7 +41,7 @@
 
   <div class="row" id="results">
   @foreach($packages as $package)
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
       @include('packages.include', ['package' => $package])
     </div>
   @endforeach
@@ -55,9 +55,41 @@
   {{ HTML::script('js/vendor/jquery.highlight.js') }}
 
   <script>
-  $("select#type").select2({
-    placeholder: "Package Types",
-    allowClear: true
+  $("input#types").select2({
+    multiple: true,
+    placeholder: "Types",
+    minimumInputLength: 2,
+    ajax: {
+      url: "{{ route('search-pakage-types') }}",
+      dataType: 'json',
+      quietMillis: 200,
+      data: function (term, page) {
+        return {
+          page: page,
+          search: term
+        };
+      },
+      results: function (data, page) {
+        return {
+          results: data.results,
+          more: (page < data.lastPage)
+        };
+      }
+    },
+    initSelection: function(element, callback) {
+      var ids = $(element).val();
+      if (ids !== "") {
+
+        var data = [];
+        $.each(ids.split(','), function(index, type){
+          data.push({
+            id: type,
+            text: type
+          });
+        });
+        callback(data);
+      }
+    }
   });
 
   $("input#tags").select2({
