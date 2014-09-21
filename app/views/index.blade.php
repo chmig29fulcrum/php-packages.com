@@ -12,8 +12,11 @@
 
   <div class="jumbotron">
     <div class="container">
-        <h1>Reverse Packagist</h1>
-        <p>{{ $count }} repos total</p>
+        <h1>Reverse Packagist <small>{{ $count }} repos</small></h1>
+        <ul>
+          <li>Find out who uses your package</li>
+          <li>Search for packages of a certain type</li>
+        </ul>
     </div>
   </div>
 
@@ -24,7 +27,7 @@
   <div>
     <div class="row">
       @foreach($packages as $package)
-        <div class="col-xs-6">
+        <div class="col-xs-12 col-sm-6">
           @include('packages.include', ['package' => $package])
         </div>
       @endforeach

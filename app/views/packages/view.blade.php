@@ -11,43 +11,36 @@
   ?>
 
   <div class="page-header">
-    {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default pull-right']) }}
-    <h1>{{ $package->name }} <small>{{ $package->author }}</small></h1>
+    <div class="btn-group pull-right">
+      <a class="btn btn-default" href="https://packagist.org/packages/{{ $package->full_name }}">Packagist</a>
+      <a class="btn btn-default" href="{{ $package->repo }}">Repo</a>
+      {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default']) }}
+    </div>
+    <h1>Package: {{ $package->name }} <small>{{ $package->author }}</small></h1>
   </div>
 
-  @foreach($package->tags as $tag)
-    {{ link_to_route('tag', $tag->name, [$tag->id, $tag->name], ['type' => 'button', 'class' => 'btn btn-primary']) }}
-  @endforeach
+  <div id="tags">
+    @foreach($package->tags as $tag)
+      {{ link_to_route('tag', $tag->name, [$tag->id, $tag->name], ['type' => 'button', 'class' => 'btn btn-primary']) }}
+    @endforeach
+  </div>
 
   <div class="row">
-    <div class="col-xs-6">
-
-      @foreach($package->authors as $author)
-        <h2>
+    @foreach($package->authors as $author)
+      <div class="col-xs-12 col-sm-6">
+        <h2 style="white-space: nowrap; overflow: hidden;">
           <a href="{{ route('author', [$author->id, Str::slug($author->name)]) }}">
           <img src="{{ \forxer\Gravatar\Gravatar::image($author->email, 256, 'mm', null, 'png', false) }}" alt="" style="height: 64px;" />
           </a>
           {{ $author->name }}
           <small>{{ $author->role }}</small>
         </h2>
-      @endforeach
-
-    </div>
-    <div class="col-xs-6">
-
-      <ul class="list-group">
-        <li class="list-group-item">Cras justo odio</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Morbi leo risus</li>
-        <li class="list-group-item">Porta ac consectetur ac</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-      </ul>
-
-    </div>
+      </div>
+    @endforeach
   </div>
 
   <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
 
       <h2>Uses</h2>
       @foreach($package->dependencies as $v)
@@ -55,7 +48,7 @@
       @endforeach
 
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-sm-6">
 
       <h2>Used by</h2>
       @foreach($package->packages as $v)

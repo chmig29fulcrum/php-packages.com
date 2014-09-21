@@ -9,7 +9,7 @@
 <div class="row">
 
   @foreach($authors as $author)
-    <div class="col-xs-2">
+    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
       @include('authors.include', ['author' => $author])
     </div>
   @endforeach

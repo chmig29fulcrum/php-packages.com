@@ -4,14 +4,14 @@ class HomeController extends BaseController
 
 	public function index()
 	{
-    Flatten::flushAll();
     $count = Package::count();
     $count = number_format($count);
 
     $packages = Package
       ::orderBy('created_at', 'desc')
       ->where('name', '!=', '')
-      ->limit(10)
+      ->where('created_at', '>', strtotime('-7 days'))
+      ->limit(100)
       ->get();
 
 		return View::make('index', [

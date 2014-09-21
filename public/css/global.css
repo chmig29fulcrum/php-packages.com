@@ -1,3 +1,8 @@
+body
+{
+  margin-top: 71px;
+}
+
 .thumbnail .caption *
 {
   height: 1.1;
@@ -10,8 +15,20 @@ a.package-include
   display: block;
 }
 
+a.package-include:hover
+{
+  text-decoration: none;
+}
+
+a.package-include:hover h3
+{
+  text-decoration: underline;
+}
+
 a.package-include div.panel-body
 {
   white-space: nowrap;
   overflow: hidden;
+  color: #333333;
 }
+
