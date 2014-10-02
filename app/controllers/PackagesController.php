@@ -11,12 +11,12 @@ class PackagesController extends BaseController
   public function index()
   {
 
-    $data           = Input::all();
-    $data['types']  = idx($data, 'types', '');
-    $data['tags']   = idx($data, 'tags', '');
-    $data['search'] = idx($data, 'search', '');
-    $data['order']  = idx($data, 'order', 'downloads');
-
+    $data            = Input::all();
+    $data['types']   = idx($data, 'types', '');
+    $data['tags']    = idx($data, 'tags', '');
+    $data['search']  = idx($data, 'search', '');
+    $data['order']   = idx($data, 'order', 'downloads');
+    $data['authors'] = idx($data, 'authors', '');
 
     $packages = Package
       ::where('name', '!=', '')
@@ -32,16 +32,15 @@ class PackagesController extends BaseController
     // Tags
     if ($data['tags'])
     {
-      // todo - fix - not working for 'ajax'
       $tags = explode(',', $data['tags']);
-      $tags = Tag::whereIn('id', $tags)->with('packages')->get();
+      $tags = array_filter($tags, 'is_numeric');
+      $tags = implode(',', $tags);
+      $tags = DB::select('SELECT package_id FROM package_tag WHERE tag_id IN('.$tags.') GROUP BY package_id');
+
       $packageIds = [];
       foreach($tags as $v)
       {
-        foreach($v->packages as $vv)
-        {
-          $packageIds[] = $vv->id;
-        }
+        $packageIds[] = $v->package_id;
       }
       $packages = $packages->whereIn('id', $packageIds);
     }
@@ -56,6 +55,22 @@ class PackagesController extends BaseController
             ->orWhere('description', 'LIKE', '%'.$data['search'].'%');
         }
       );
+    }
+
+    // Authors
+    if ($data['authors'])
+    {
+      $authors = explode(',', $data['authors']);
+      $authors = array_filter($authors, 'is_numeric');
+      $authors = implode(',', $authors);
+      $authors = DB::select('SELECT package_id FROM author_package WHERE author_id IN('.$authors.') GROUP BY package_id');
+
+      $packageIds = [];
+      foreach($authors as $v)
+      {
+        $packageIds[] = $v->package_id;
+      }
+      $packages = $packages->whereIn('id', $packageIds);
     }
 
     // Order
@@ -181,6 +196,9 @@ class PackagesController extends BaseController
     // Get latest from Packagist
     $packgist = new Packagist('http://packagist.org');
     $packgist = $packgist->all();
+
+    // Save to stats table
+    Stat::create(['repos' => count($packgist)]);
 
     // Get latest from our database
     $packages = [];

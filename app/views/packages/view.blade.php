@@ -29,7 +29,7 @@
 
   <div id="tags">
     @foreach($package->tags as $tag)
-      {{ link_to_route('tag', $tag->name, [$tag->id, $tag->name], ['type' => 'button', 'class' => 'btn btn-primary']) }}
+      {{ link_to_route('packages', $tag->name, ['tags' => $tag->id], ['type' => 'button', 'class' => 'btn btn-primary']) }}
     @endforeach
   </div>
 

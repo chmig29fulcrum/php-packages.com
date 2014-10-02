@@ -17,8 +17,8 @@
     "anahkiasen/flatten":           "dev-master",
     "packaged/helpers":             "dev-master"
   },
-  "require-dev":           {
-    "barryvdh/laravel-debugbar":    "1.*"
+  "require-dev":       {
+    "barryvdh/laravel-debugbar": "1.*"
   },
   "autoload":          {
     "classmap": [

@@ -27,13 +27,25 @@
       </div>
       <div class="col-xs-12 col-sm-6">
         <div class="form-group">
+          {{ Form::label('author', 'Author') }}
+          {{ Form::select('author', [], null, ['class' => 'form-control']) }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="form-group">
           {{ Form::label('order', 'Order By') }}
           {{ Form::select('order', $orders, null, ['class' => 'form-control']) }}
         </div>
       </div>
+      <div class="col-xs-12 col-sm-6">
+        {{ Form::label('&nbsp;', '') }}
+        <div class="form-group">
+          {{ Form::submit('Search', ['class' => 'btn btn-primary']) }}
+        </div>
+      </div>
     </div>
 
-  {{ Form::submit('Search', ['class' => 'btn btn-primary']) }}
+
 
   {{ Form::close() }}
 
