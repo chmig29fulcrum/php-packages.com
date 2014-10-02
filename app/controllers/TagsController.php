@@ -1,13 +1,28 @@
 <?php
+use Jleagle\WordCloud;
+
 class TagsController extends BaseController
 {
 
 	public function index()
 	{
-    $tags = Tag::orderBy('name', 'asc')->paginate(100);
+    $tags = DB::select('
+      SELECT tags.id, tags.name, count(tag_id) as count
+      FROM package_tag
+      LEFT JOIN tags on tags.id = package_tag.tag_id
+      GROUP BY tag_id
+      HAVING count > 1
+      ORDER BY count DESC
+    ');
+
+    $cloud = new WordCloud();
+    foreach($tags as $tag)
+    {
+      $cloud->addWord($tag->name, [$tag->id], $tag->count);
+    }
 
 		return View::make('tags.index', [
-      'tags' => $tags
+      'words' => $cloud->getWords('count', 'desc', 14, 36),
     ]);
 	}
 
