@@ -25,7 +25,7 @@
 
     <div class="github-fork-ribbon-wrapper right-bottom visible-lg-inline-block">
       <div class="github-fork-ribbon">
-        <a href="https://github.com/Jleagle/games">Fork me on GitHub</a>
+        <a href="https://github.com/Jleagle/reverse-packagist">Fork me on GitHub</a>
       </div>
     </div>
 
