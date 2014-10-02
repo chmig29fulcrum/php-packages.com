@@ -21,7 +21,7 @@
   </div>
 
   <div class="page-header">
-    <h1>Packages added in the last 7 days</h1>
+    <h1>Packages added in the last {{ $days }} days</h1>
   </div>
 
   <div>

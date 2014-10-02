@@ -7,16 +7,19 @@ class HomeController extends BaseController
     $count = Package::count();
     $count = number_format($count);
 
+    $days = 3;
+
     $packages = Package
       ::orderBy('created_at', 'desc')
       ->where('name', '!=', '')
-      ->where('created_at', '>', date("Y-m-d H:i:s", strtotime('-7 days')))
+      ->where('created_at', '>', date("Y-m-d H:i:s", strtotime('-'.$days.' days')))
       ->limit(50)
       ->get();
 
 		return View::make('index', [
-      'packages' => $packages,
-      'count' => $count,
+        'packages' => $packages,
+        'count'    => $count,
+        'days'     => $days,
     ]);
 
 	}
