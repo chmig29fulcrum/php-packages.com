@@ -14,16 +14,6 @@ class AuthorsController extends BaseController
     ]);
 	}
 
-  public function view($id, $slug = null)
-  {
-    $author = Author::where('id', '=', $id)->firstOrFail();
-    $author->packages->sortByDesc('downloads_m');
-
-    return View::make('authors.view', [
-      'author' => $author
-    ]);
-  }
-
   public function ajaxSearchAuthors()
   {
     $data = Input::all();

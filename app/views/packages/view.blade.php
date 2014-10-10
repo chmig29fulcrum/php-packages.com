@@ -12,15 +12,15 @@
 
   <div class="page-header">
 
-    <form class="form-inline pull-right" role="form">
+    <div class="form-inline pull-right" role="form">
       <div class="form-group">
         <div class="input-group">
           <a class="input-group-addon" href="https://packagist.org/packages/{{ $package->full_name }}">Packagist</a>
-          <input class="form-control" type="email" value="{{ $package->repo }}">
+          <input class="form-control" type="text" value="{{ $package->repo }}">
         </div>
       </div>
       {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default']) }}
-    </form>
+    </div>
 
     <h1>Package: {{ $package->name }} <small>{{ $package->author }} ({{ $package->type }})</small></h1>
   </div>
