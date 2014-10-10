@@ -11,15 +11,17 @@
   ?>
 
   <div class="page-header">
-    <div class="btn-toolbar  pull-right" role="toolbar">
-      <div class="btn-group">
-        <a class="btn btn-default" href="https://packagist.org/packages/{{ $package->full_name }}">Packagist</a>
-        <a class="btn btn-default" href="{{ $package->repo }}">Repo</a>
+
+    <form class="form-inline pull-right" role="form">
+      <div class="form-group">
+        <div class="input-group">
+          <a class="input-group-addon" href="https://packagist.org/packages/{{ $package->full_name }}">Packagist</a>
+          <input class="form-control" type="email" value="{{ $package->repo }}">
+        </div>
       </div>
-      <div class="btn-group">
-        {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default']) }}
-      </div>
-    </div>
+      {{ link_to_route('update-package', 'Updated '.$package->last_updated, [$package->author, $package->name], ['class' => 'btn btn-default']) }}
+    </form>
+
     <h1>Package: {{ $package->name }} <small>{{ $package->author }} ({{ $package->type }})</small></h1>
   </div>
 
