@@ -3,8 +3,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Jleagle\Packagist;
 
-//SK4-5E17-988F-0F53-A238-0889
-
 class PackagesController extends BaseController
 {
 

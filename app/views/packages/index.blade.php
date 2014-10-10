@@ -28,7 +28,7 @@
       <div class="col-xs-12 col-sm-6">
         <div class="form-group">
           {{ Form::label('author', 'Author') }}
-          {{ Form::select('author', [], null, ['class' => 'form-control']) }}
+          {{ Form::hidden('authors', null, ['class' => 'form-control', 'id' => 'authors']) }}
         </div>
       </div>
       <div class="col-xs-12 col-sm-6">
@@ -130,6 +130,44 @@
       if (ids !== "") {
         $.ajax(
           "{{ route('search-tags-init') }}", {
+            dataType: "json",
+            data: {
+              ids: ids
+            }
+          }
+        ).done(function(data) {
+          callback(data);
+        });
+      }
+    }
+  });
+
+  $("input#authors").select2({
+    multiple: true,
+    placeholder: "Authors",
+    minimumInputLength: 2,
+    ajax: {
+      url: "{{ route('search-authors') }}",
+      dataType: 'json',
+      quietMillis: 200,
+      data: function (term, page) {
+        return {
+          page: page,
+          search: term
+        };
+      },
+      results: function (data, page) {
+        return {
+          results: data.results,
+          more: (page < data.lastPage)
+        };
+      }
+    },
+    initSelection: function(element, callback) {
+      var ids = $(element).val();
+      if (ids !== "") {
+        $.ajax(
+          "{{ route('search-authors-init') }}", {
             dataType: "json",
             data: {
               ids: ids
