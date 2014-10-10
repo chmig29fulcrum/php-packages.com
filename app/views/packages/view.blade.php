@@ -39,7 +39,7 @@
     @foreach($package->authors as $author)
       <div class="col-xs-12 col-sm-6">
         <h2 style="white-space: nowrap; overflow: hidden;">
-          <a href="{{ route('author', [$author->id, Str::slug($author->name)]) }}">
+          <a href="{{ route('packages', ['authors' => $author->id]) }}">
           <img src="{{ \forxer\Gravatar\Gravatar::image($author->email, 256, 'mm', null, 'png', false) }}" alt="" style="height: 64px;" />
           </a>
           {{ $author->name }}
